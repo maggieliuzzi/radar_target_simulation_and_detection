@@ -2,11 +2,11 @@
 
 ## Steps
 
-### 2D CFAR process
+2D CFAR process
 
-### Selecting training, guard cells and offset
+Selecting training, guard cells and offset
 
-### Suppressing the non-thresholded cells at the edges
+Suppressing the non-thresholded cells at the edges
 
 
 ![1D-FFT](graphs/range_1st_FFT.png)
