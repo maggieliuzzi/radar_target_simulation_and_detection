@@ -9,10 +9,10 @@
 ### Suppressing the non-thresholded cells at the edges
 
 
-[1st FFT (range)](../graphs/range_1st_FFT.png)
+![alt text](../graphs/range_1st_FFT.png)
 
-[Range Doppler Map](../graphs/range_doppler_map_1.png)
+![alt text](../graphs/range_doppler_map_1.png)
 
-[Same Range Doppler Map](../graphs/range_doppler_map_2.png)
+![alt text](../graphs/range_doppler_map_2.png)
 
-[CA-CFAR](../graphs/CA-CFAR.png)
+![alt text](../graphs/CA-CFAR.png)
