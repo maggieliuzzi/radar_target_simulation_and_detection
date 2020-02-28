@@ -91,15 +91,15 @@ end
 %% RANGE MEASUREMENT
 
 
-% reshape vector into Nr*Nd array. Nr and Nd here also define the size of range and doppler FFT respectively
+% reshaping vector into Nr*Nd array. Nr and Nd here also define the size of range and doppler FFT respectively
 
-% run the Fast Fourier Transform (FFT) on the beat signal along the range bins dimension (Nr) and normalise
+% running the Fast Fourier Transform (FFT) on the beat signal along the range bins dimension (Nr) and normalise
 sig_fft = fft(Mix, Nr) ./ Nr;
 
-% take absolute value of FFT output
+% taking absolute value of FFT output
 sig_fft = abs(sig_fft);       
 
-% Output of FFT is double-sided signal, but we are interested in one side of the spectrum only, hence we throw out half of the samples
+% output of FFT is double-sided signal, but since we are interested in one side of the spectrum only, we throw out half of the samples
 sig_fft = sig_fft(1 : (Nr / 2));
 
 figure('Name', 'Range from first FFT')   % plot range
@@ -187,7 +187,7 @@ for j = 1 : Nd - 2 * (Tcr + Gcr)
 end
 
 % The process above will generate a thresholded block, which is smaller than the Range Doppler Map as the CUT cannot be located at the edges of matrix
-% Hence, few cells will not be thresholded. To keep the map size same set those values to 0  %% necessary?
+% Hence, few cells will not be thresholded. To keep the map size same set those values to 0
 
 % display CFAR output using the surf function
 figure('Name', 'CA-CFAR Filtered RDM'), surf(doppler_axis, range_axis, CFAR_sig);
