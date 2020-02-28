@@ -45,9 +45,9 @@ Designing wave
     end
 
 
-2D FFT
+FFT
 
-    %% RANGE
+    %% RANGE (1st FFT)
 
     % running the Fast Fourier Transform (FFT) on the beat signal along the range bins dimension (Nr) and normalise
     sig_fft = fft(Mix, Nr) ./ Nr;
@@ -58,7 +58,7 @@ Designing wave
     % output of FFT is double-sided signal, but since we are interested in one side of the spectrum only, we throw out half of the samples
     sig_fft = sig_fft(1 : (Nr / 2));
 
-    %% VELOCITY
+    %% VELOCITY (2nd FFT)
 
     Mix = reshape(Mix, [Nr, Nd]);
 
@@ -74,7 +74,7 @@ Designing wave
 
 Selecting training, guard cells and offset
 
-    % selecting number of training cells in both the dimensions by trial and error
+    % selecting number of training cells in both the dimensions by trial and error trying to match objective
     Tcr = 10;
     Tcd = 4;
 
