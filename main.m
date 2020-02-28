@@ -23,11 +23,11 @@ v0 = -50;
 %% FMCW Waveform Design
 
 d_res = 1;
-c = 3*10^8;
+speed_of_light = 3*10^8;
 RMax = 200;
 
-Bsweep = c / (2 * d_res);  % bandwidth
-Tchirp = 5.5 * 2 * RMax / c; % chirp time
+Bsweep = speed_of_light / (2 * d_res);  % bandwidth
+Tchirp = 5.5 * 2 * RMax / speed_of_light; % chirp time
 alpha = Bsweep / Tchirp; % slope of FMCW chirps
 fc = 77e9;              % carrier frequency of radar 
                                                      
@@ -51,7 +51,7 @@ td = zeros(1, length(t));
 for i = 1:length(t)         
     % for each timestamp update the range of the target for constant velocity
     r_t(i) = d0 + v0 * t(i);
-    td(i) = 2 * r_t(i) / c;
+    td(i) = 2 * r_t(i) / speed_of_light;
     
     % for each time sample update the transmitted and received signal
     Tx(i) = cos(2 * pi * (fc * t(i) + alpha * t(i)^2 / 2));
