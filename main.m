@@ -102,7 +102,7 @@ sig_fft = abs(sig_fft);
 % Output of FFT is double-sided signal, but we are interested in one side of the spectrum only, hence we throw out half of the samples
 sig_fft = sig_fft(1 : (Nr / 2));
 
-figure ('Name', 'Range from first FFT')  % plot range
+figure('Name', 'Range from first FFT')   % plot range
 plot(sig_fft); grid minor                % plot FFT output 
 axis([0 200 0 1]);
 xlabel('Measured range');
@@ -110,17 +110,17 @@ xlabel('Measured range');
 
 %% RANGE DOPPLER RESPONSE
 
-% Run a 2D FFT on the mixed signal (beat signal) output and generate a Range Doppler Map (RDM)
+% Running a 2D FFT on the mixed signal (beat signal) output and generate a Range Doppler Map (RDM)
 
 % The output of the 2D FFT is an image that has reponse in the range and doppler FFT bins. 
-% So, it is important to convert the axis from bin sizes to range and doppler based on their max values
+% Therefore, it is important to convert the axis from bin sizes to range and doppler based on their max values
 
 Mix = reshape(Mix, [Nr, Nd]);
 
 % 2D FFT using the FFT size for both dimensions
 sig_fft2 = fft2(Mix, Nr, Nd);
 
-% Taking just one side of signal from range dimension.
+% taking just one side of signal from range dimension
 sig_fft2 = sig_fft2(1 : Nr / 2, 1 : Nd);
 sig_fft2 = fftshift(sig_fft2);
 RDM = abs(sig_fft2);
@@ -134,7 +134,7 @@ figure('Name', 'Range Doppler Map'), surf(doppler_axis, range_axis, RDM);
 
 %% CFAR Implementation
 
-% slide window through the complete Range Doppler Map
+% sliding window through the complete Range Doppler Map (RDM)
 
 % selecting number of training cells in both the dimensions
 Tcr = 10;
@@ -144,10 +144,10 @@ Tcd = 4;
 Gcr = 5;
 Gcd = 2;
 
-% offset the threshold by signal-to-noise-ratio (SNR) value in dB
+% offsetting the threshold by signal-to-noise-ratio (SNR) value in dB
 offset = 1.4;
 
-% create vector to store noise level for each iteration on training cells
+% creating vector to store noise level for each iteration on training cells
 noise_level = zeros(Nr / 2 - 2 * (Tcd + Gcd), Nd - 2 * (Tcr + Gcr));
 gridSize = (2 * Tcr + 2 * Gcr + 1) * (2 * Tcd + 2 * Gcd + 1);
 trainingCellsNum = gridSize - (2 * Gcr + 1) * (2 * Gcd + 1);
@@ -164,7 +164,7 @@ trainingCellsNum = gridSize - (2 * Gcr + 1) * (2 * Gcd + 1);
 
 CFAR_sig = zeros(size(RDM));
 
-% Use RDM[x,y] as the matrix from the output of 2D FFT for implementing CFAR
+% Using RDM[x,y] as the matrix from the output of 2D FFT for implementing CFAR
 for j = 1 : Nd - 2 * (Tcr + Gcr)
     for i = 1 : Nr / 2 - 2 * (Tcd + Gcd)
         % to extract only the training cells, first get the sliding patch and, 
@@ -186,10 +186,8 @@ for j = 1 : Nd - 2 * (Tcr + Gcr)
     end
 end
 
-% The process above will generate a thresholded block, which is smaller than the 
-% Range Doppler Map as the CUT cannot be located at the edges of matrix
-% Hence, few cells will not be thresholded
-% To keep the map size same set those values to 0  %% necessary?
+% The process above will generate a thresholded block, which is smaller than the Range Doppler Map as the CUT cannot be located at the edges of matrix
+% Hence, few cells will not be thresholded. To keep the map size same set those values to 0  %% necessary?
 
 % display CFAR output using the surf function
 figure('Name', 'CA-CFAR Filtered RDM'), surf(doppler_axis, range_axis, CFAR_sig);
